@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HaiQing</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">海HQ</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <form class="d-flex ms-auto me-3 position-relative" role="search">
+          <input
+    class="form-control me-2"
+    type="search"
+    id="searchInput"
+    placeholder="Search for products and categories..."
+    autocomplete="off">
+    <button class="btn btn-warning" type="submit">Search</button>
+  <!-- 🔍 Live Search Dropdown -->
+  <div
+    id="searchResults"
+    class="list-group position-absolute mt-2 shadow-sm"
+    style="z-index: 1050; display: none;"></div>
+</form>
+
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#">Sign In</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🟡 HTML STRUCTURE -->
+<div class="carousel-full-width top-padding">
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" data-bs-pause="false">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="slider-item responsive-image"
+             data-desktop="/images/Welcome Desktop.jpg"
+             data-mobile="/images/Welcome Mobile.jpg">
+          <div class="overlay"></div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <a href="page.html?page=promo"><div class="slider-item responsive-image"
+             data-desktop="/images/Refer Desktop.avif"
+             data-mobile="/images/Refer Mobile.avif">
+          <div class="overlay"></div>
+        </div></a>
+      </div>
+      <div class="carousel-item">
+        <div class="slider-item responsive-image"
+             data-desktop="/images/Testimonial Desktop.avif"
+             data-mobile="/images/Testimonial Mobile.avif">
+          <div class="overlay"></div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="slider-item responsive-image"
+             data-desktop="/images/OEM Desktop.webp"
+             data-mobile="/images/OEM Mobile.avif">
+          <div class="overlay"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔴 INDICATORS -->
+    <div class="carousel-indicators custom-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+    </div>
+  </div>
+</div>
+
+<!-- 🟢 JS SCRIPT -->
+<script>
+  // Dynamically set correct image for desktop/mobile
+  function setResponsiveImages() {
+    document.querySelectorAll(".responsive-image").forEach(item => {
+      const desktop = item.getAttribute("data-desktop");
+      const mobile = item.getAttribute("data-mobile");
+      const imgSrc = window.innerWidth >= 768 ? desktop : mobile;
+      item.style.backgroundImage = `url('${imgSrc}')`;
+    });
+  }
+
+  // Initialize carousel
+  document.addEventListener("DOMContentLoaded", () => {
+    setResponsiveImages();
+    window.addEventListener("resize", setResponsiveImages);
+  });
+</script>
+
+<!-- Product Sections -->
+<section class="container my-5">
+
+  <!-- Gaming -->
+  <div class="mb-5">
+    <h4 class="fw-bold mb-3">Get your game on</h4>
+    <div id="gaming-carousel" class="product-carousel d-flex overflow-auto pb-2">
+      <!-- Dynamic gaming products -->
+    </div>
+  </div>
+
+  <!-- Kitchen -->
+  <div class="mb-5">
+    <h4 class="fw-bold mb-3">Top categories in Kitchen</h4>
+    <div id="kitchen-carousel" class="product-carousel d-flex overflow-auto pb-2">
+      <!-- Dynamic kitchen products -->
+    </div>
+  </div>
+
+  <!-- Fan -->
+  <div class="mb-5">
+    <h4 class="fw-bold mb-3">Shop for your home essentials</h4>
+    <div id="Fan-carousel" class="product-carousel d-flex overflow-auto pb-2">
+      <!-- Dynamic home products -->
+    </div>
+  </div>
+
+    <!-- Light -->
+  <div class="mb-5">
+    <h4 class="fw-bold mb-3">Shop for your home essentials</h4>
+    <div id="Light-carousel" class="product-carousel d-flex overflow-auto pb-2">
+      <!-- Dynamic home products -->
+    </div>
+  </div>
+
+</section>
+
+
+    <!-- Hero Banner -->
+  <section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
+    <div class="container">
+      <h1 class="fw-bold mb-1">Shop Holiday Gift Guides</h1>
+      <p class="lead">Find gifts for everyone this season</p>
+      <a href="#" class="btn btn-warning">Shop Now</a>
+    </div>
+  </section>
+
+ <!-- List Section -->
+   <section class="py-3">
+   <div class="container">
+<ul class="list-group" id="infoList">
+  <li class="list-group-item" data-target="logistics">
+    <i class="bi bi-truck"></i>
+    <span>Secure Logistics</span>
+  </li>
+  <li class="list-group-item" data-target="warranty">
+    <i class="bi bi-shield-check"></i>
+    <span>Warranty Policy</span>
+  </li>
+  <li class="list-group-item" data-target="support">
+    <i class="bi bi-headset"></i>
+    <span>Customer Support</span>
+  </li>
+  <li class="list-group-item" data-target="payment">
+    <i class="bi bi-credit-card"></i>
+    <span>Payment Methods</span>
+  </li>
+</ul>
+
+</div>
+</section>
+
+<!-- Bottom Modal -->
+<div id="infoModal" class="info-modal">
+  <div class="info-content shadow-lg">
+    <button class="close-btn" id="closeModal">&times;</button>
+    <div id="modalDetails"></div>
+  </div>
+</div>
+<script>
+// === Info Modal ===
+const infoList = document.getElementById("infoList");
+const infoModal = document.getElementById("infoModal");
+const modalDetails = document.getElementById("modalDetails");
+const closeModal = document.getElementById("closeModal");
+if (infoList && infoModal && closeModal) {
+  infoList.addEventListener("click", (e) => {
+    if (e.target.matches(".list-group-item")) {
+      const targetId = e.target.getAttribute("data-target");
+      modalDetails.innerHTML = infoDetails[targetId] || "<p>No details found.</p>";
+      infoModal.classList.add("active");
+    }
+  });
+  closeModal.addEventListener("click", () => infoModal.classList.remove("active"));
+}
+</script>
+
+<!-- Footer Section -->
+<footer class="bg-dark text-light pt-5 pb-3 mt-2">
+  <div class="container-fluid px-0">
+    <div class="container">
+
+      <!-- Social Icons -->
+      <div class="text-center mb-4">
+        <a href="https://www.facebook.com/haiqingclassictechnology" class="text-light mx-2 fs-5"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.instagram.com/haiqing_tech" class="text-light mx-2 fs-5"><i class="bi bi-instagram"></i></a>
+        <a href="https://t.me/+9LHXPY-3uS4xZTI0" class="text-light mx-2 fs-5"><i class="bi bi-telegram"></i></a>
+        <a href="https://www.youtube.com/@haiqingtech" class="text-light mx-2 fs-5"><i class="bi bi-youtube"></i></a>
+        <a href="#" class="text-light mx-2 fs-5"><i class="bi bi-twitter-x"></i></a>
+        <a href="https://www.tiktok.com/@haiqingtech" class="text-light mx-2 fs-5"><i class="bi bi-tiktok"></i></a>
+      </div>
+
+      <!-- Footer Sections -->
+      <div class="row justify-content-center text-start gx-5" id="footerContent">
+        <!-- Customer Service -->
+        <div class="col-12 col-md-3 mb-4">
+          <div class="footer-section">
+            <h5 class="fw-semibold mb-3 d-none d-md-block text-center text-md-start">Customer Service</h5>
+            <button class="accordion-button collapsed bg-dark text-light border-0 p-0 d-md-none text-center" 
+                    type="button" data-bs-toggle="collapse" data-bs-target="#customerService"
+                    aria-expanded="false">
+              Customer Service
+            </button>
+            <div id="customerService" class="collapse d-md-block">
+              <ul class="list-unstyled mt-2 small text-center text-md-start">
+                <li><strong>Service Hours:</strong><br>Monday–Friday 9AM–6PM</li>
+                <li class="mt-2"><strong>Phone:</strong><br>09159576184</li>
+                <li class="mt-2"><strong>Email:</strong><br>
+                  haiqingclassicbrands@gmail.com<br>
+                </li>
+                <li class="mt-2"><strong>WhatsApp:</strong><br>+234 817 974 8650 / +234 915 957 6184</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="col-12 col-md-3 mb-4">
+          <div class="footer-section">
+            <h5 class="fw-semibold mb-3 d-none d-md-block text-center text-md-start">Haiqing Classic Technology</h5>
+            <button class="accordion-button collapsed bg-dark text-light border-0 p-0 d-md-none text-center" 
+                    type="button" data-bs-toggle="collapse" data-bs-target="#aboutUs"
+                    aria-expanded="false">
+              About Haiqing Classic Technology
+            </button>
+            <div id="aboutUs" class="collapse d-md-block">
+              <ul class="list-unstyled mt-2 small text-center text-md-start">
+                <li><a href="page.html?page=about" class="text-secondary text-decoration-none">About Us</a></li>
+                <li><a href="page.html?page=about" class="text-secondary text-decoration-none">Services</a></li>
+                <li><a href="page.html?page=about" class="text-secondary text-decoration-none">Community</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="col-12 col-md-3 mb-4">
+          <div class="footer-section">
+            <h5 class="fw-semibold mb-3 d-none d-md-block text-center text-md-start">Terms</h5>
+            <button class="accordion-button collapsed bg-dark text-light border-0 p-0 d-md-none text-center" 
+                    type="button" data-bs-toggle="collapse" data-bs-target="#terms"
+                    aria-expanded="false">
+              Terms
+            </button>
+            <div id="terms" class="collapse d-md-block">
+              <ul class="list-unstyled mt-2 small text-center text-md-start">
+                <li><a href="page.html?page=terms" class="text-secondary text-decoration-none">Shipping & Delivery</a></li>
+                <li><a href="page.html?page=terms" class="text-secondary text-decoration-none">Return & Refund Policy</a></li>
+                <li><a href="page.html?page=terms" class="text-secondary text-decoration-none">Terms & Conditions</a></li>
+                <li><a href="page.html?page=terms" class="text-secondary text-decoration-none">Privacy Policy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get Help -->
+        <div class="col-12 col-md-3 mb-4">
+          <div class="footer-section">
+            <h5 class="fw-semibold mb-3 d-none d-md-block text-center text-md-start">Guideline</h5>
+            <button class="accordion-button collapsed bg-dark text-light border-0 p-0 d-md-none text-center" 
+                    type="button" data-bs-toggle="collapse" data-bs-target="#getHelp"
+                    aria-expanded="false">
+              Get Help
+            </button>
+            <div id="getHelp" class="collapse d-md-block">
+              <ul class="list-unstyled mt-2 small text-center text-md-start">
+                <li><a href="page.html?page=gethelp" class="text-secondary text-decoration-none">Contact Us</a></li>
+                <li><a href="page.html?page=gethelp" class="text-secondary text-decoration-none">Shopping Guide</a></li>
+                <li><a href="page.html?page=gethelp" class="text-secondary text-decoration-none">Book appointment</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="text-center text-secondary small mt-4 pt-3 border-top border-secondary">
+  &copy; <span id="currentYear"></span> Haiqing Classic Technology<br>All rights reserved.
+</div>
+
+    </div>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/product.js"></script>
+</body>
+</html>

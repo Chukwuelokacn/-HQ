@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HAIQING CLASSIC TECHNOLOGY - Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="goto-here">
+
+  <!-- ===== Navbar (minimal) ===== -->
+  <nav class="navbar navbar-light bg-white shadow-sm fixed-top">
+    <div class="container-fluid px-3 d-flex justify-content-between align-items-center">
+      <a class="navbar-brand fw-bold text-success" href="index.html">
+        <img src="images/HaiQing.svg" alt="Logo" style="height:32px;"> Haiqing
+      </a>
+      <a href="index.html" class="btn btn-outline-success btn-sm"><i class="bi bi-arrow-left"></i> Back</a>
+    </div>
+  </nav>
+
+  <div style="height: 60px;"></div> <!-- Spacer -->
+
+  <!-- ===== Product Details Section ===== -->
+  <section class="py-4">
+    <div class="container">
+      <div id="productDetail" class="row g-4">
+        <!-- JS will inject product details here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="bg-dark text-light text-center py-3 mt-5">
+    <small>&copy; <span id="currentYear"></span> Haiqing Classic Technology. All rights reserved.</small>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // --- YEAR AUTO ---
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    // --- GET PRODUCT ID ---
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get("id"));
+    const product = products.find(p => p.id === productId);
+
+    const container = document.getElementById("productDetail");
+
+    if (!product) {
+      container.innerHTML = `<p class="text-danger text-center">Product not found.</p>`;
+    } else {
+      const parametersHTML = product.parameters
+        ? Object.entries(product.parameters).map(([k, v]) => `
+            <tr><th>${k}</th><td>${v}</td></tr>
+          `).join('')
+        : `<tr><td colspan="2">No parameters available</td></tr>`;
+
+      container.innerHTML = `
+        <div class="col-lg-6">
+          <div id="carouselProduct" class="carousel slide shadow-sm" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-3">
+              <div class="carousel-item active">
+                <img src="${product.image}" class="d-block w-100" alt="${product.name}">
+              </div>
+              ${product.extraImages ? product.extraImages.map(img => `
+                <div class="carousel-item">
+                  <img src="${img}" class="d-block w-100 rounded-3" alt="${product.name}">
+                </div>
+              `).join('') : ''}
+            </div>
+          </div>
+
+          ${product.video ? `
+          <div class="mt-4">
+            <h6 class="fw-bold text-success">Product Highlight</h6>
+            <div class="ratio ratio-16x9">
+              <iframe src="${product.video}" allowfullscreen></iframe>
+            </div>
+          </div>` : ""}
+        </div>
+
+        <div class="col-lg-6">
+          <h4 class="fw-bold">${product.name}</h4>
+          <p class="fs-5 text-success fw-semibold">&#8358;${product.price}</p>
+          <p><del class="text-secondary">&#8358;${product.oldPrice}</del>
+             <span class="badge bg-success ms-2">${product.discount}</span></p>
+
+          <!-- Color Options -->
+          <h6 class="fw-semibold">Color:</h6>
+          <div id="colorOptions" class="d-flex flex-wrap gap-2 mb-3"></div>
+
+          <!-- Quantity -->
+          <div class="d-flex align-items-center mb-3">
+            <h6 class="fw-semibold me-3">Quantity (MOQ: 20)</h6>
+            <div class="input-group" style="width:130px;">
+              <button class="btn btn-outline-secondary" id="minusQty">-</button>
+              <input type="number" class="form-control text-center" id="quantity" value="20" min="20">
+              <button class="btn btn-outline-secondary" id="plusQty">+</button>
+            </div>
+          </div>
+
+          <button id="whatsappBtn" class="btn btn-success w-100 mb-4">
+            <i class="bi bi-whatsapp"></i> Buy on WhatsApp
+          </button>
+
+          <!-- Product Parameters -->
+          <h6 class="fw-bold border-bottom pb-2">Product Parameters</h6>
+          <table class="table table-bordered table-sm">
+            <tbody>${parametersHTML}</tbody>
+          </table>
+
+          <!-- Description -->
+          <div class="mt-3">
+            <h6 class="fw-bold">Description</h6>
+            <p>${product.description}</p>
+          </div>
+        </div>
+      `;
+
+      // --- COLORS ---
+      const colorDiv = document.getElementById("colorOptions");
+      const colors = product.parameters?.Color ? product.parameters.Color.split(",") : ["Default"];
+      colors.forEach((c, i) => {
+        colorDiv.innerHTML += `
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="color" id="color${i}" value="${c.trim()}" ${i === 0 ? "checked" : ""}>
+            <label class="form-check-label" for="color${i}">${c.trim()}</label>
+          </div>
+        `;
+      });
+
+      // --- QUANTITY CONTROL ---
+      const qtyInput = document.getElementById("quantity");
+      document.getElementById("plusQty").onclick = () => qtyInput.value = parseInt(qtyInput.value) + 1;
+      document.getElementById("minusQty").onclick = () => {
+        if (qtyInput.value > 20) qtyInput.value = parseInt(qtyInput.value) - 1;
+      };
+
+      // --- WHATSAPP BUTTON ---
+      document.getElementById("whatsappBtn").onclick = () => {
+        const color = document.querySelector('input[name="color"]:checked').value;
+        const qty = parseInt(qtyInput.value);
+        const total = parseInt(product.price.replace(/,/g, '')) * qty;
+        const message = `Hey! I want to buy ${product.name} (${color}) ${qty}pcs at ₦${product.price}/pcs (Total: ₦${total.toLocaleString()}).`;
+        window.open(`https://wa.me/2349159576184?text=${encodeURIComponent(message)}`, "_blank");
+      };
+    }
+  </script>
+</body>
+</html>
